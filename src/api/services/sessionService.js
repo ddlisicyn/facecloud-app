@@ -1,3 +1,5 @@
+import { removeItem } from "./localStorage";
+
 export function deleteUserData() {
-    window.localStorage.removeItem('token');
+    removeItem();
 }

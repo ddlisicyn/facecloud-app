@@ -18,7 +18,7 @@ export default class ApiClient {
         const { body, ...restOptions } = reqOptions;
         const urlWithParams = new URL(`${this.baseUrl}${url}`);
         const mergedOptions = _.merge(_.cloneDeep(this.options), restOptions);
-
+        
         try {
             const response = await fetch(urlWithParams.toString(), {
             ...mergedOptions,
@@ -43,8 +43,7 @@ export default class ApiClient {
                 case 400: {
                     return this.errorMessageHandler(response);
                 }
-                case 401:
-                case 403: {
+                case 401: {
                     deleteUserData();
                     break;
                 }
