@@ -1,4 +1,5 @@
 export const routes = {
-    core: '/',
+    core: '/login',
     profile: '/profile',
+    upload: '/upload',
 };

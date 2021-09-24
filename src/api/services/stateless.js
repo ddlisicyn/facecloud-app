@@ -1,14 +1,10 @@
 import { apiClient } from "../ApiClient";
-import { getItem } from "./localStorage";
-
-const token = getItem();
-const config = {
-    headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'image/jpeg'
-    }
-}
+import { getAuth } from "./helper";
 
 export async function detect(data) {
-    return apiClient.upload('detect?demographics=true', data, config);
+    const config = getAuth();
+    config.headers['Content-Type'] = 'image/jpeg';
+    console.log(config);
+    return apiClient.upload('detect?demographics=true', 
+        data, config);
 }

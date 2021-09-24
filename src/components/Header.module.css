@@ -1,0 +1,12 @@
+.header {
+    padding: 2%;
+    background-color: #2E3235;
+    color: white;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    align-items: center;
+}
+
+.header button {
+    height: 40px;
+}

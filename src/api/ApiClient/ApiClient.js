@@ -106,7 +106,7 @@ export default class ApiClient {
         try {
             msg = JSON.parse(responseText);
             if (msg.message) {
-                console.log(msg.message);
+                alert(msg.message);
             }
         } catch (e) {
             console.info('Couldn\'t parse error response JSON: ', e);

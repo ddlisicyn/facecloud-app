@@ -1,0 +1,15 @@
+.card {
+    margin: 1%;
+}
+
+.img__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 250px;
+    overflow: hidden;
+}
+
+.text p {
+    margin: 2px;
+}
