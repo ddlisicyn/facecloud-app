@@ -1,23 +1,37 @@
 import React, { useState } from 'react';
-import { OverlayTrigger, Popover, InputGroup, FormControl, Button } from 'react-bootstrap';
+import { OverlayTrigger, 
+    Popover, 
+    InputGroup, 
+    FormControl, 
+    Button,
+    ButtonGroup,
+    ToggleButton } from 'react-bootstrap';
 
-export function Face({ bbox, demographics, createPerson }) {
-    const [personData, setPersonData] = useState({});
+const radios = [
+    { name: 'male', value: 'male' },
+    { name: 'female', value: 'female' }
+];
 
+export function Face({ realSize, diff, bbox, demographics, createPerson }) {
     const { x, y, width, height} = bbox;
     const { age: {mean}, gender } = demographics;
+    const [personData, setPersonData] = useState({});
+    const [radioValue, setRadioValue] = useState(gender);
+
+    const top = (x / realSize.width) * 100;
+    const left = (y / realSize.height) * 100;
 
     const handleChange = ({ target: { name, value} }) => {
-        setPersonData({
-            ...personData,
-            age: mean,
-            gender,
+        setPersonData((lastPersonData) => ({
+            ...lastPersonData,
             [name]: value
-        })
+        }))
     }
 
     const handleClick = () => {
         if (personData.lastName && personData.firstName && personData.patronymicName) {
+            personData.age = mean;
+            personData.gender = radioValue;
 			createPerson({
                 data: {
                     person_data: [personData]
@@ -39,7 +53,22 @@ export function Face({ bbox, demographics, createPerson }) {
                 <Popover.Body>
                     <div className="d-flex flex-direction-row justify-content-between">
                         <p><b>Age: {mean}</b></p>
-                        <i className={`bi bi-gender-${gender}`}></i>
+                        <ButtonGroup>
+                            {radios.map((radio, idx) => (
+                            <ToggleButton
+                                key={idx}
+                                id={`radio-${idx}`}
+                                type="radio"
+                                name="radio"
+                                variant={idx % 2 ? 'outline-danger' : 'outline-primary'}
+                                value={radio.value}
+                                checked={radioValue === radio.value}
+                                onChange={(e) => setRadioValue(e.currentTarget.value)}
+                            >
+                                <i className={`bi bi-gender-${radio.name}`}></i>
+                            </ToggleButton>
+                            ))}
+                        </ButtonGroup>
                     </div>
                     <InputGroup>
                         <FormControl 
@@ -75,8 +104,8 @@ export function Face({ bbox, demographics, createPerson }) {
         >
             <div style={{
                 position: 'absolute',
-                top: y,
-                left: x,
+                top: `${top}%`,
+                left: `${left}%`,
                 width: width,
                 height: height,
                 border: '3px solid gray'

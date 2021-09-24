@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
-import { getLists, createDB } from '../../api/services/database';
-import { Header } from '../../components/Header';
-import { PhotoUpload } from '../../components/PhotoUpload';
-import { detect } from '../../api/services/stateless';
-import { PhotoRedactor } from '../../components/PhotoRedactor';
-import { createPers } from '../../api/services/person';
-import { createPhoto } from '../../api/services/photo';
+import cn from 'classnames';
+import { getLists, createDB, getPersons } from '../../api/services/database';
+import { deletePers, updatePers } from '../../api/services/person';
+import { PersonCard } from './PersonCard';
+import { useHistory } from 'react-router';
+import { routes } from '../../constants/routes';
+import style from './ProfilePage.module.css';
 
 export function ProfilePage() {
 	const [databaseId, setDatabaseId] = useState(0);
-	const [personId, setPersonId] = useState(0);
-	const [photo, setPhoto] = useState();
-	const [bbox, setBbox] = useState({});
-	const [facesData, setFacesData] = useState([]);
+	const [persons, setPersons] = useState([]);
+	const history = useHistory();
 
 	useEffect(() => {
 		getLists()
@@ -23,9 +21,11 @@ export function ProfilePage() {
 	}, []);
 
 	useEffect(() => {
-		createPhoto(photo, personId, bbox)
-			.then(response => console.log(response));
-	}, [personId]);
+		if (databaseId) {
+			getPersons(databaseId)
+				.then(response => setPersons(response.data));
+		}
+	}, [databaseId]);
 
 	const handleCreateDB = () => {
 		createDB()
@@ -34,40 +34,57 @@ export function ProfilePage() {
 				alert(response.message);
 			});
 	}
-
-	const uploadPhoto = (data) => {
-		setPhoto(data.photo[0]);
-		detect(data.photo[0])
-			.then(response => setFacesData(response.data));
-	}
-
-	const createPerson = (personData, bbox) => {
-		personData.database_id = databaseId;
-		createPers(personData)
+	
+	const deletePerson = (personId) => {
+		deletePers(personId)
 			.then(response => {
-				setPersonId(response.data.id);
-				setBbox(bbox);
-				alert(response.message);
+				console.log(response.message);
+				getPersons(databaseId)
+					.then(response => setPersons(response.data));
 			});
 	}
-	
+
+	const updatePerson = (personId, personData) => {
+        updatePers(personId, personData)
+            .then(response => {
+				alert(response.message)
+				getPersons(databaseId)
+					.then(response => setPersons(response.data));
+			});
+    }
+
+	const onUploadClick = () => {
+		history.push(routes.upload);
+	}
+
     return (
-		<>
-			<Header />
+		<div>
 			{
 				databaseId ?
-				<> 
-					<PhotoUpload uploadPhoto={uploadPhoto} />
-					{
-						photo ? <PhotoRedactor photo={photo} faces={facesData} createPerson={createPerson} /> : ''
-					}
-					
+				<> 	
+					<div style={{ margin: '1%' }} >
+						<Button onClick={onUploadClick}>Upload new photo</Button>
+					</div>
+					<div className={cn(style.wrapper)}>
+						<div className={cn('mt-5', style.container)} style={{ width: '100%' }}>
+							{
+							persons.length ? persons.map(person => (
+									<PersonCard 
+										key={person.id}
+										data={person}
+										deletePerson={deletePerson}
+										updatePerson={updatePerson}
+									/>
+							)) : <p style={{ margin: '1%' }}>No person has been created yet</p>
+							}
+						</div>
+					</div>
 				</>
-				: 	<Button 
+				: 	<Button style={{ margin: '1%' }}
 						variant="primary"
 						onClick={handleCreateDB}
 					>Create new database</Button>
 			}
-	  	</>
+	  	</div>
     )
 }

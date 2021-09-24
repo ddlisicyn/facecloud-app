@@ -14,7 +14,6 @@ export function LoginPage() {
 	const authentication = (credentials) => {
         login(credentials)
             .then(response => {
-                alert('You are loged in successfully!');
                 setItem(response.data.access_token);
                 history.push(profile);
             });

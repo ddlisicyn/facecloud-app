@@ -1,12 +1,6 @@
 import { apiClient } from "../ApiClient";
-import { getItem } from "./localStorage";
+import { getAuth } from "./helper";
 
-const token = getItem();
-const header = {
-    headers: {
-        Authorization: `Bearer ${token}`
-    }
-}
 const payload = {
     data: {
         some_data: []
@@ -14,9 +8,13 @@ const payload = {
 }
 
 export async function getLists() {
-    return apiClient.get('databases', header);
+    return apiClient.get('databases', getAuth());
 }
 
 export async function createDB() {
-    return apiClient.post('databases', payload, header);
+    return apiClient.post('databases', payload, getAuth());
+}
+
+export async function getPersons(databaseId) {
+    return apiClient.get(`databases/${databaseId}/persons`, getAuth())
 }
