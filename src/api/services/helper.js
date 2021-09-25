@@ -1,4 +1,4 @@
-import { getItem } from "./localStorage";
+import { getItem } from './localStorage';
 
 export const getAuth = () => ({
     headers: {

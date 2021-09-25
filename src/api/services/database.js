@@ -1,5 +1,5 @@
-import { apiClient } from "../ApiClient";
-import { getAuth } from "./helper";
+import { apiClient } from '../ApiClient';
+import { getAuth } from './helper';
 
 const payload = {
     data: {

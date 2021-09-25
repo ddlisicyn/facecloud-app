@@ -9,7 +9,7 @@ export function Header({ logout }) {
         <div className={cn('d-flex', 'justify-content-between', style.header)}>
             <h1>Face Cloud</h1>
             <Button 
-                variant="outline-danger"
+                variant='outline-danger'
                 onClick={logout}
             >Logout</Button>
         </div>

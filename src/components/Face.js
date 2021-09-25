@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { OverlayTrigger, 
+import { Alert,
+    OverlayTrigger, 
     Popover, 
     InputGroup, 
     FormControl, 
@@ -12,14 +13,11 @@ const radios = [
     { name: 'female', value: 'female' }
 ];
 
-export function Face({ realSize, diff, bbox, demographics, createPerson }) {
+export function Face({ bbox, demographics, createPerson }) {
     const { x, y, width, height} = bbox;
     const { age: {mean}, gender } = demographics;
     const [personData, setPersonData] = useState({});
     const [radioValue, setRadioValue] = useState(gender);
-
-    const top = (x / realSize.width) * 100;
-    const left = (y / realSize.height) * 100;
 
     const handleChange = ({ target: { name, value} }) => {
         setPersonData((lastPersonData) => ({
@@ -43,23 +41,23 @@ export function Face({ realSize, diff, bbox, demographics, createPerson }) {
                 patronymicName: ''
 			});
 		} else {
-			alert('Заполните все поля!');
+			alert('Please, fill in form fields!');
 		}
     }
 
     return (
-        <OverlayTrigger trigger="click" placement="bottom" overlay={
-            <Popover id="popover-basic">
+        <OverlayTrigger trigger='click' placement='bottom' overlay={
+            <Popover id='popover-basic'>
                 <Popover.Body>
-                    <div className="d-flex flex-direction-row justify-content-between">
+                    <div className='d-flex flex-direction-row justify-content-between'>
                         <p><b>Age: {mean}</b></p>
                         <ButtonGroup>
                             {radios.map((radio, idx) => (
                             <ToggleButton
                                 key={idx}
                                 id={`radio-${idx}`}
-                                type="radio"
-                                name="radio"
+                                type='radio'
+                                name='radio'
                                 variant={idx % 2 ? 'outline-danger' : 'outline-primary'}
                                 value={radio.value}
                                 checked={radioValue === radio.value}
@@ -73,39 +71,39 @@ export function Face({ realSize, diff, bbox, demographics, createPerson }) {
                     <InputGroup>
                         <FormControl 
                         onChange={handleChange} 
-                        name="lastName" 
-                        className="mt-1" 
-                        placeholder="Last Name"
+                        name='lastName'
+                        className='mt-1' 
+                        placeholder='Last Name'
                         value={personData.lastName}
                     />
                     </InputGroup>
                     <InputGroup>
                         <FormControl 
                         onChange={handleChange} 
-                        name="firstName" 
-                        className="mt-1" 
-                        placeholder="First Name"
+                        name='firstName' 
+                        className='mt-1'
+                        placeholder='First Name'
                         value={personData.firstName}
                     />
                     </InputGroup>
                     <InputGroup>
                         <FormControl 
                         onChange={handleChange} 
-                        name="patronymicName" 
-                        className="mt-1" 
-                        placeholder="Patronymic Name"  
+                        name='patronymicName' 
+                        className='mt-1' 
+                        placeholder='Patronymic Name'  
                         value={personData.patronymicName}
                     />
                     </InputGroup>
-                    <Button onClick={handleClick} className="mt-1">Create person</Button>
+                    <Button onClick={handleClick} className='mt-2'>Create person</Button>
                 </Popover.Body>
             </Popover>
         }
         >
             <div style={{
                 position: 'absolute',
-                top: `${top}%`,
-                left: `${left}%`,
+                top: y,
+                left: x,
                 width: width,
                 height: height,
                 border: '3px solid gray'

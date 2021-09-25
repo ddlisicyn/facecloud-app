@@ -31,7 +31,7 @@ export function ProfilePage() {
 		createDB()
 			.then(response => {
 				setDatabaseId(response.data.id);
-				alert(response.message);
+				console.log(response.message);
 			});
 	}
 	
@@ -47,7 +47,7 @@ export function ProfilePage() {
 	const updatePerson = (personId, personData) => {
         updatePers(personId, personData)
             .then(response => {
-				alert(response.message)
+				console.log(response.message);
 				getPersons(databaseId)
 					.then(response => setPersons(response.data));
 			});
@@ -80,8 +80,9 @@ export function ProfilePage() {
 						</div>
 					</div>
 				</>
-				: 	<Button style={{ margin: '1%' }}
-						variant="primary"
+				: 	<Button 
+						style={{ margin: '1%' }}
+						variant='primary'
 						onClick={handleCreateDB}
 					>Create new database</Button>
 			}

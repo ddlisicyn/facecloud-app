@@ -1,4 +1,4 @@
-import { removeItem } from "./localStorage";
+import { removeItem } from './localStorage';
 
 export function deleteUserData() {
     removeItem();

@@ -1,5 +1,5 @@
-import { apiClient } from "../ApiClient";
-import { getAuth } from "./helper";
+import { apiClient } from '../ApiClient';
+import { getAuth } from './helper';
 
 export async function createPhoto(photo, personId, bbox) {
     const config = getAuth();

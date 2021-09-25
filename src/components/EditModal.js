@@ -34,13 +34,8 @@ export function EditModal({ modalVisibility, handleClose, data, editPerson }) {
                     person_data: [personData]
                 }
             });
-			setPersonData({
-				lastName: '',
-				firstName: '',
-                patronymicName: ''
-			});
 		} else {
-			alert('Заполните все поля!');
+			alert('Please, fill in form fields!');
 		}
     }
 
@@ -48,32 +43,33 @@ export function EditModal({ modalVisibility, handleClose, data, editPerson }) {
       <>
         <Modal show={modalVisibility} onHide={handleClose}>
             <Modal.Header closeButton>
+                Edit person
             </Modal.Header>
             <Modal.Body>
               	<InputGroup>
                     <FormControl 
                         onChange={handleChange} 
-                        name="lastName" 
-                        className="mt-1" 
-                        placeholder="Last Name"
+                        name='lastName'
+                        className='mt-1' 
+                        placeholder='Last Name'
                         value={personData.lastName}
                     />
                     </InputGroup>
 				<InputGroup>
 					<FormControl 
 						onChange={handleChange} 
-						name="firstName" 
-						className="mt-1" 
-						placeholder="First Name"
+						name='firstName'
+						className='mt-1' 
+						placeholder='First Name'
 						value={personData.firstName}
 					/>
 				</InputGroup>
 				<InputGroup>
 					<FormControl 
 						onChange={handleChange} 
-						name="patronymicName" 
-						className="mt-1" 
-						placeholder="Patronymic Name"  
+						name='patronymicName' 
+						className='mt-1'
+						placeholder='Patronymic Name'  
 						value={personData.patronymicName}
 					/>
 				</InputGroup>
@@ -82,8 +78,8 @@ export function EditModal({ modalVisibility, handleClose, data, editPerson }) {
                     <ToggleButton
                         key={idx}
                         id={`radio-${idx}`}
-                        type="radio"
-                        name="radio"
+                        type='radio'
+                        name='radio'
                         variant={idx % 2 ? 'outline-danger' : 'outline-primary'}
                         value={radio.value}
                         checked={radioValue === radio.value}
@@ -95,10 +91,10 @@ export function EditModal({ modalVisibility, handleClose, data, editPerson }) {
                 </ButtonGroup>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant='secondary' onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={handleEdit}>
+                <Button variant='primary' onClick={handleEdit}>
                     Save Changes
                 </Button>
           </Modal.Footer>

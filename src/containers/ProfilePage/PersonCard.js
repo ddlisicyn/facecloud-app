@@ -18,16 +18,21 @@ export function PersonCard({ data, deletePerson, updatePerson }) {
                 .then(response => setPhoto(URL.createObjectURL(response))));
     }, [id]);
 
-    const redactorPerson = () => {
+    const openModal = () => {
         setModalVisibility(true);
     }
 
     const handleClose = () => setModalVisibility(false);
 
+    const handleUpdate = (personId, personData) => {
+        handleClose();
+        updatePerson(personId, personData);
+    }
+
     return (
-        <Card style={{ width: '14rem' }} className={cn(style.card)}>
+        <Card className={cn(style.card)}>
             <div className={cn(style.img__wrapper)}>
-                <Card.Img variant="top" src={photo} />
+                <Card.Img variant='top' src={photo} />
             </div>
                 <Card.Body>
                     <Card.Text className={cn(style.text)}>
@@ -37,22 +42,22 @@ export function PersonCard({ data, deletePerson, updatePerson }) {
                         Age: {age}<br/>
                         Gender: {gender}
                     </Card.Text>
-                    <div className="d-flex justify-content-between" style={{width: '100px'}}>
+                    <div className='d-flex justify-content-between' style={{width: '100px'}}>
                         <Button 
-                            onClick={redactorPerson}
-                            variant="outline-warning"
-                        ><i className="bi bi-pencil-fill"></i></Button>
+                            onClick={openModal}
+                            variant='outline-warning'
+                        ><i className='bi bi-pencil-fill'></i></Button>
                         <Button 
                             onClick={() => deletePerson(id)}
-                            variant="outline-danger"
-                        ><i className="bi bi-trash"></i></Button>
+                            variant='outline-danger'
+                        ><i className='bi bi-trash'></i></Button>
                     </div>
             </Card.Body>
             <EditModal 
                 modalVisibility={modalVisibility} 
                 handleClose={handleClose} 
                 data={data}
-                editPerson={updatePerson}
+                editPerson={handleUpdate}
                 />
         </Card>
     )

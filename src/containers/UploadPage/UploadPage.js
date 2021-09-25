@@ -56,7 +56,7 @@ export function UploadPage() {
 	return (
 		<div style={{ margin: '1%' }}>
 			<Button onClick={onBack}>
-				Назад
+				Back to profile
 			</Button>
 			<PhotoUpload uploadPhoto={uploadPhoto} />
 				{

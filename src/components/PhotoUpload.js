@@ -10,12 +10,17 @@ export function PhotoUpload({ uploadPhoto }) {
     }
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)} style={{width: "300px", marginTop: '2%'}}>
-            <Form.Group controlId="formFile" className="mb-3">
+        <Form onSubmit={handleSubmit(onSubmit)} style={{width: '300px', marginTop: '2%'}}>
+            <Form.Group controlId='formFile' className='mb-3'>
                 <Form.Label>Upload your photo</Form.Label>
-                <Form.Control {...register('photo', { required: true })} name="photo" type="file" accept=".jpg, .jpeg, .png" />
+                <Form.Control 
+                    {...register('photo', { required: true })} 
+                    name='photo' 
+                    type='file' 
+                    accept='.jpg, .jpeg' 
+                />
             </Form.Group>
-            <Button type="submit">Upload</Button>
+            <Button type='submit'>Upload</Button>
         </Form>
     )
 }

@@ -26,7 +26,7 @@ export function LoginPage() {
     }
 
     return (
-        <div className="d-flex justify-content-center">
+        <div className='d-flex justify-content-center'>
 			<LoginForm 
                 authentication={authentication} 
                 register={register} />
