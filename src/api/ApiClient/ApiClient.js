@@ -47,14 +47,12 @@ export default class ApiClient {
                     deleteUserData();
                     break;
                 }
-                default:
-                    break;
             }
         }
 
-        return this.errorMessageHandler(response);
+            return this.errorMessageHandler(response);
         } catch (error) {
-        return this.defaultErrorHandler(error);
+            return this.defaultErrorHandler(error);
         }
     }
 
